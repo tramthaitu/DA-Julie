@@ -6,8 +6,9 @@ WHERE ID %2=0
 SELECT COUNT(CITY)- COUNT(DISTINCT CITY)
 FROM STATION
 --  BÀI 3
-  
-  
+  select 
+ceiling(avg(Salary)-avg(replace(salary,'0','')))
+from EMPLOYEES
 -- BÀI 4
 -- bước 1: Phân tích yêu cầu
 -- 1. output(trường gốc/phái sinh) mean (phái sinh)= tổng items/số lượng đơn hàng
