@@ -1,4 +1,4 @@
---bài 1
+--bài 1 
 select DISTINCT CITY
 FROM STATION
 WHERE ID %2=0
