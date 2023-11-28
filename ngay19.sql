@@ -43,8 +43,9 @@ ALTER COLUMN msrp TYPE numeric
 
 select *
 from public.sales_dataset_rfm_prj
-where ORDERNUMBER is null and QUANTITYORDERED is null and PRICEEACH is null and
-ORDERLINENUMBER is null and SALES is null and ORDERDATE is null
+where ORDERNUMBER is null or QUANTITYORDERED is null or PRICEEACH is null or
+ORDERLINENUMBER is null or SALES is null or ORDERDATE is null
+
 
 --3.Thêm cột CONTACTLASTNAME, CONTACTFIRSTNAME được tách ra từ CONTACTFULLNAME .
 select *
