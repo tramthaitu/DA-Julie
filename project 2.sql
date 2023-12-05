@@ -142,8 +142,39 @@ GROUP BY
     dates, product_categories
 ORDER BY 
     dates, revenue DESC;
+---------------------------------------------------------------------------------------------------------------
+1.
+    with cte as 
+(
+SELECT 
+    EXTRACT(MONTH FROM oi.delivered_at) AS Month,
+    EXTRACT(YEAR FROM oi.delivered_at) AS Year,
+    p.category AS Product_category,
+    ROUND(SUM(oi.sale_price), 2) AS TPV,
+    COUNT(DISTINCT oi.order_id) AS TPO,
+    ROUND((((SUM(oi.sale_price) - LAG(SUM(oi.sale_price)) OVER (PARTITION BY p.category ORDER BY EXTRACT(MONTH FROM oi.delivered_at))) / LAG(SUM(oi.sale_price)) OVER (PARTITION BY p.category ORDER BY EXTRACT(MONTH FROM oi.delivered_at))))*100, 2) AS Revenue_growth,
+    ROUND(((COUNT(DISTINCT oi.order_id) - LAG(COUNT(DISTINCT oi.order_id)) OVER (PARTITION BY p.category ORDER BY EXTRACT(MONTH FROM oi.delivered_at))) / LAG(COUNT(DISTINCT oi.order_id)) OVER (PARTITION BY p.category ORDER BY EXTRACT(MONTH FROM oi.delivered_at)))*100,2) AS Order_growth,
+    ROUND(SUM(p.cost), 2) AS Total_cost,
+    ROUND(SUM(oi.sale_price - p.cost), 2) AS Total_profit,
+    ROUND(SUM(oi.sale_price - p.cost) / SUM(p.cost) * 100, 2) AS Profit_to_cost_ratio
+FROM 
+    bigquery-public-data.thelook_ecommerce.orders o
+JOIN 
+    bigquery-public-data.thelook_ecommerce.order_items oi ON o.order_id = oi.order_id
+JOIN 
+    bigquery-public-data.thelook_ecommerce.products p ON oi.product_id = p.id
+GROUP BY 
+    Year, Month, category,oi.delivered_at
+ORDER BY 
+    Year, Month, category,oi.delivered_at
+)
 
+select *
+from cte 
+where month is not null
 
+2. Tạo retention cohort analysis.
+    
 
 
 
