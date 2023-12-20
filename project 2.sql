@@ -232,6 +232,16 @@ from customer_cohort
 --Excel 
 https://docs.google.com/spreadsheets/d/1grHtfhA0tgcig9idk9L9rglxPA3M6bUeoNBNakp_LC8/edit?usp=sharing
     
+/*Nhìn chung thì lượng khách hàng mới tăng liên tục theo từng năm nhưng lượng khách hàng quay lại thì rất thấp 
+so với lượng khách hàng mới đó. Cần có sự cải tiến sản phẩm, dịch vụ nhằm giữ chân khách hàng.
+Tập trung vào các sản phẩm chủ lực với doanh thu cao trước, tạo các combo/mã giảm giá cho các sản phẩm này. Bố trí 
+các sản phẩm doanh thu thấp đi kèm với các sản phẩm chủ lực nhằm tạo ra các nhu cầu mới cho khách hàng, vì bởi nhiều nhu
+cầu được đáp ứng thì khách hàng sẽ quay lại sẽ có ý định quay lại nhiều hơn. VD: nước tăng lực thì có thể đi 
+với miếng dán salonpas -dành cho người có nhu cầu chạy deadline thâu đêm, tã đi kèm với sữa cho em bé hoặc bia-dành cho
+những ông bố đi mua đồ cho con...
+
+
+
 
 
 
