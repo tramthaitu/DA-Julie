@@ -174,6 +174,63 @@ from cte
 where month is not null
 
 2. Tạo retention cohort analysis.
+    WITH cte AS (
+    SELECT user_id,created_at,round(sale_price,2) as amount,
+        MIN(created_at) OVER(PARTITION BY user_id) AS first_date,
+    FROM bigquery-public-data.thelook_ecommerce.order_items
+)
+,cte2 as 
+(
+SELECT 
+user_id,cte.amount,
+cast(format_date('%Y-%m',first_date) as string) as cohort_date,
+created_at,
+(extract(year from created_at)-extract(year from first_date )) *12
++ (extract(month from created_at)-extract(month from first_date ))+1 as index
+FROM cte
+)
+, cte3 as  
+(
+select 
+cohort_date,
+index,
+count(distinct user_id) as cnt,
+round(sum(cte2.amount),2) as revenue
+from cte2
+group  by cohort_date, index
+)
+
+--Customer cohort 
+,customer_cohort as
+(
+SELECT 
+    cohort_date,
+    SUM(CASE WHEN index = 1 THEN cnt ELSE 0 END) AS m1,
+    SUM(CASE WHEN index = 2 THEN cnt ELSE 0 END) AS m2,
+    SUM(CASE WHEN index = 3 THEN cnt ELSE 0 END) AS m3,
+    SUM(CASE WHEN index = 4 THEN cnt ELSE 0 END) AS m4
+FROM cte3
+GROUP BY cohort_date
+ORDER BY cohort_date)
+--retention cohort 
+,retention_cohort as 
+(
+select 
+cohort_date,
+round(100.00*m1/m1,2) || '%' as m1,
+round(100.00*m2/m1,2) || '%' as m2,
+round(100.00*m3/m1,2) || '%' as m3,
+round(100.00*m4/m1,2) || '%' as m4
+from customer_cohort)
+--churn cohort
+Select cohort_date,
+(100.00 - round(100.00* m1/m1,2)) || '%' as m1,
+(100.00 - round(100.00* m2/m1,2)) || '%' as m2,
+(100.00 - round(100.00* m3/m1,2)) || '%' as m3,
+(100.00 - round(100.00* m4/m1,2)) || '%' as m4
+from customer_cohort
+--Excel 
+https://docs.google.com/spreadsheets/d/1grHtfhA0tgcig9idk9L9rglxPA3M6bUeoNBNakp_LC8/edit?usp=sharing
     
 
 
