@@ -230,7 +230,9 @@ Select cohort_date,
 (100.00 - round(100.00* m4/m1,2)) || '%' as m4
 from customer_cohort
 --Excel 
-em bổ sung sau ạ, em làm lộn bảng 
+https://docs.google.com/spreadsheets/d/1kPdTgbIYsP2VZBA0o8cqUHFXgBegNzpLh3AVMQOC0kc/edit?usp=sharing
+*Note: Một sheet có nhiều bảng là do em dùng để tính toán ạ.
+
     
 /*Nhìn chung thì lượng khách hàng mới tăng liên tục theo từng năm nhưng lượng khách hàng quay lại thì rất thấp 
 so với lượng khách hàng mới đó. Cần có sự cải tiến sản phẩm, dịch vụ nhằm giữ chân khách hàng.
